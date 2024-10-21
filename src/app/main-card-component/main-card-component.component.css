@@ -1,0 +1,40 @@
+
+.main-card-body{
+  width: 300px;
+  height: 400px;
+  outline: 1px solid black;
+  border-radius: 7px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.city-container{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding-top: var(--marginSm);
+  font-size: 2rem;
+}
+
+.city-weather{
+  display: flex;
+  justify-content: space-around;
+}
+
+.weather-status{
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid black;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
+
+.humidity-wind{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  font-size: 1.2rem;
+}
