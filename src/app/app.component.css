@@ -1,9 +1,11 @@
-.main-body-container{
+.main-body-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start;
+  min-height: 100vh;
   background-color: wheat;
+  padding: 20px;
 }
 
 .add-weather-card{

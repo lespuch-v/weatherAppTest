@@ -3,45 +3,46 @@ import { RouterOutlet } from '@angular/router';
 import { MainCardComponentComponent, MainConfigCard } from './main-card-component/main-card-component.component';
 import { WeatherService } from './weather.service';
 import { AddWeatherCardComponent } from './add-weather-card/add-weather-card.component';
-import { NgIf } from '@angular/common';
+import { NgForOf, NgIf } from '@angular/common';
 import { WeatherModalComponent } from './weather-modal/weather-modal.component';
+import { LocalStorageService, StoredCity } from './local-storage.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainCardComponentComponent, AddWeatherCardComponent, NgIf, WeatherModalComponent],
+  imports: [RouterOutlet, MainCardComponentComponent, AddWeatherCardComponent, NgIf, WeatherModalComponent, NgForOf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  lat!: number;
-  lon!: number;
-  weatherData: any = null;
-  cardConfig: MainConfigCard | null = null;
   weatherCards: MainConfigCard[] = [];
   showModal = false;
 
-  constructor(private weatherApi: WeatherService) {}
+  constructor(
+    private weatherApi: WeatherService,
+    private storageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
-    this.getCity();
+    this.loadStoredCities();
   }
 
-  getCity() {
-    this.weatherApi.getCityData('Prague').subscribe(result => {
-      console.log(result);
-      this.lat = result.lat;
-      this.lon = result.lon;
-      this.getWeather();
-    });
+  private loadStoredCities() {
+    const cities = this.storageService.getCities();
+    cities.forEach(city => this.loadCityWeather(city));
   }
 
-  getWeather() {
-    this.weatherApi.getCurrentWeatherForCity(this.lat, this.lon).subscribe({
+  private loadCityWeather(city: StoredCity) {
+    this.weatherApi.getCurrentWeatherForCity(city.lat, city.lon).subscribe({
       next: (result) => {
-        console.log('Weather data:', result);
-        this.weatherData = result;
-        this.updateCardConfig();
+        const cardConfig: MainConfigCard = {
+          cityName: result.name,
+          temperature: result.main.temp,
+          weatherStatus: result.weather[0].main,
+          windConditions: result.wind.speed,
+          humidity: result.main.humidity,
+        };
+        this.weatherCards.push(cardConfig);
       },
       error: (error) => {
         console.error('Error fetching weather data:', error);
@@ -49,24 +50,27 @@ export class AppComponent implements OnInit {
     });
   }
 
-  updateCardConfig() {
-    if (this.weatherData) {
-      this.cardConfig = {
-        cityName: this.weatherData.name,
-        temperature: this.weatherData.main.temp,
-        weatherStatus: this.weatherData.weather[0].main,
-        windConditions: this.weatherData.wind.speed,
-        humidity: this.weatherData.main.humidity,
-      };
-    }
-  }
-
   handleAddCity(cityName: string): void {
-    console.log('Adding city:', cityName);
-    this.showModal = false;
+    this.weatherApi.getCityData(cityName).subscribe({
+      next: (cityData) => {
+        const newCity: StoredCity = {
+          name: cityData.name,
+          lat: cityData.lat,
+          lon: cityData.lon
+        };
+        this.storageService.addCity(newCity);
+        this.loadCityWeather(newCity);
+        this.showModal = false;
+      },
+      error: (error) => {
+        console.error('Error adding city:', error);
+      }
+    });
   }
 
   handleDeleteCard(index: number) {
+    const cityToDelete = this.weatherCards[index];
+    this.storageService.removeCity(cityToDelete.cityName);
     this.weatherCards = this.weatherCards.filter((_, i) => i !== index);
   }
 }
