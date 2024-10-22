@@ -3,11 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { MainCardComponentComponent, MainConfigCard } from './main-card-component/main-card-component.component';
 import { WeatherService } from './weather.service';
 import { AddWeatherCardComponent } from './add-weather-card/add-weather-card.component';
+import { NgIf } from '@angular/common';
+import { WeatherModalComponent } from './weather-modal/weather-modal.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainCardComponentComponent, AddWeatherCardComponent],
+  imports: [RouterOutlet, MainCardComponentComponent, AddWeatherCardComponent, NgIf, WeatherModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -16,9 +18,10 @@ export class AppComponent implements OnInit {
   lon!: number;
   weatherData: any = null;
   cardConfig: MainConfigCard | null = null;
+  weatherCards: MainConfigCard[] = [];
+  showModal = false;
 
-  constructor(private weatherApi: WeatherService) {
-  }
+  constructor(private weatherApi: WeatherService) {}
 
   ngOnInit() {
     this.getCity();
@@ -58,11 +61,12 @@ export class AppComponent implements OnInit {
     }
   }
 
-  handleDeleteCard(cardId: any): void {
-
+  handleAddCity(cityName: string): void {
+    console.log('Adding city:', cityName);
+    this.showModal = false;
   }
 
-  handleAddNewCity() {
-
+  handleDeleteCard(index: number) {
+    this.weatherCards = this.weatherCards.filter((_, i) => i !== index);
   }
 }

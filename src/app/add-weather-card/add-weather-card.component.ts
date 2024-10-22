@@ -11,6 +11,6 @@ export class AddWeatherCardComponent {
   @Output() add = new EventEmitter<unknown>();
 
   onAdd() {
-
+    this.add.emit(true)
   }
 }

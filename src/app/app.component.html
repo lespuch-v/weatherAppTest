@@ -3,7 +3,10 @@
     [config]="cardConfig"
     (delete)="handleDeleteCard($event)">
   </main-card-component>
-  <add-weather-card class="add-weather-card" (add)="handleAddNewCity()"></add-weather-card>
-  <button (click)="getCity()">click me</button>
-  <button (click)="getWeather()">get weather</button>
+  <add-weather-card (add)="showModal = true"></add-weather-card>
+  <app-weather-modal
+    *ngIf="showModal"
+    (close)="showModal = false"
+    (addCity)="handleAddCity($event)">
+  </app-weather-modal>
 </main>

@@ -21,10 +21,11 @@ export interface MainConfigCard {
 export class MainCardComponentComponent {
 
   @Input() config: MainConfigCard | null = null;
-  @Output() delete = new EventEmitter<void>();
+  @Input() index: number = -1
+  @Output() delete = new EventEmitter<number>();
 
   onDelete() {
-    this.delete.emit();
+    this.delete.emit(this.index);
   }
 
 }
