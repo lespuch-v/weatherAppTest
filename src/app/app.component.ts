@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MainCardComponentComponent, MainConfigCard } from './main-card-component/main-card-component.component';
 import { WeatherService } from './weather.service';
+import { AddWeatherCardComponent } from './add-weather-card/add-weather-card.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainCardComponentComponent],
+  imports: [RouterOutlet, MainCardComponentComponent, AddWeatherCardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   }
 
   getCity() {
-    this.weatherApi.getCityData('Madrid').subscribe(result => {
+    this.weatherApi.getCityData('Prague').subscribe(result => {
       console.log(result);
       this.lat = result.lat;
       this.lon = result.lon;
@@ -55,5 +56,13 @@ export class AppComponent implements OnInit {
         humidity: this.weatherData.main.humidity,
       };
     }
+  }
+
+  handleDeleteCard(cardId: any): void {
+
+  }
+
+  handleAddNewCity() {
+
   }
 }

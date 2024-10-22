@@ -1,40 +1,192 @@
-
-.main-card-body{
-  width: 300px;
-  height: 400px;
-  outline: 1px solid black;
-  border-radius: 7px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+.main-card-body {
+  width: 320px;
+  min-height: 450px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #2c3e50, #3498db);
+  color: white;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  box-sizing: border-box;
 }
 
-.city-container{
+.city-container {
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
-  padding-top: var(--marginSm);
-  font-size: 2rem;
+  height: 100%;
+  gap: 24px;
 }
 
-.city-weather{
-  display: flex;
-  justify-content: space-around;
+.city-header {
+  text-align: center;
 }
 
-.weather-status{
-  height: 100px;
+.city-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.temperature {
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-bottom: 2px solid black;
-  flex-direction: column;
-  font-size: 1.5rem;
+  align-items: baseline;
+  gap: 4px;
 }
 
-.humidity-wind{
+.temp-value {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.temp-unit {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.weather-status {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.status-text {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.weather-details {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
   align-items: center;
-  flex-direction: row;
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease;
+}
+
+.detail-card:hover {
+  transform: translateX(4px);
+}
+
+.detail-icon {
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.detail-label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Humidity specific styles */
+.detail-indicator {
+  grid-column: 2;
   width: 100%;
-  font-size: 1.2rem;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.indicator-bar {
+  height: 100%;
+  width: var(--humidity-level, 0%);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  transition: width 1s ease-out;
+}
+
+/* Wind specific styles */
+.wind-scale {
+  grid-column: 2;
+  display: flex;
+  gap: 4px;
+}
+
+.scale-marker {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.scale-marker:nth-child(-n + 3) {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+svg {
+  opacity: 0.9;
+}
+
+.trash-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.trash-button:hover {
+  background: rgba(244, 67, 54, 0.8);
+  transform: scale(1.05);
+}
+
+.trash-button:active {
+  transform: scale(0.95);
+}
+
+.main-card-body {
+  position: relative;  /* Add this to properly position the trash button */
+  width: 320px;
+  min-height: 450px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #2c3e50, #3498db);
+  color: white;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  box-sizing: border-box;
 }

@@ -1,29 +1,51 @@
 <div class="main-card-body">
+  <button class="trash-button" (click)="onDelete()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+      <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
+    </svg>
+  </button>
   <div class="city-container">
-    <div class="city-weather">
-      <span>{{ config?.cityName }}</span>
-      <span>{{ config?.temperature }}	°C</span>
+    <div class="city-header">
+      <h2 class="city-name">{{ config?.cityName }}</h2>
+      <div class="temperature">
+        <span class="temp-value">{{ config?.temperature }}</span>
+        <span class="temp-unit">°C</span>
+      </div>
     </div>
+
     <div class="weather-status">
-      {{ config?.weatherStatus }}
-      <div class="humidity-wind">
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg"
-               height="24px"
-               viewBox="0 -960 960 960"
-               width="24px"
-               fill="#e8eaed"
-          >
-            <path
-              d="M480-100q-133 0-226.5-92T160-416q0-63 24.5-120.5T254-638l226-222 226 222q45 44 69.5 101.5T800-416q0 132-93.5 224T480-100ZM240-416h480q0-47-18-89.5T650-580L480-748 310-580q-34 32-52 74.5T240-416Z"
-            />
+      <span class="status-text">{{ config?.weatherStatus }}</span>
+    </div>
+
+    <div class="weather-details">
+      <div class="detail-card humidity">
+        <div class="detail-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="currentColor">
+            <path d="M480-100q-133 0-226.5-92T160-416q0-63 24.5-120.5T254-638l226-222 226 222q45 44 69.5 101.5T800-416q0 132-93.5 224T480-100ZM240-416h480q0-47-18-89.5T650-580L480-748 310-580q-34 32-52 74.5T240-416Z"/>
           </svg>
-          {{ config?.humidity }}
-        </span>
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M460-160q-50 0-85-35t-35-85h80q0 17 11.5 28.5T460-240q17 0 28.5-11.5T500-280q0-17-11.5-28.5T460-320H80v-80h380q50 0 85 35t35 85q0 50-35 85t-85 35ZM80-560v-80h540q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43h-80q0-59 40.5-99.5T620-840q59 0 99.5 40.5T760-700q0 59-40.5 99.5T620-560H80Zm660 320v-80q26 0 43-17t17-43q0-26-17-43t-43-17H80v-80h660q59 0 99.5 40.5T880-380q0 59-40.5 99.5T740-240Z"/></svg>
-          {{ config?.windConditions }}
-        </span>
+        </div>
+        <div class="detail-info">
+          <span class="detail-value">{{ config?.humidity }}%</span>
+          <span class="detail-label">Humidity</span>
+        </div>
+        <div class="detail-indicator" [style.--humidity-level]="config?.humidity + '%'">
+          <div class="indicator-bar"></div>
+        </div>
+      </div>
+
+      <div class="detail-card wind">
+        <div class="detail-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="currentColor">
+            <path d="M460-160q-50 0-85-35t-35-85h80q0 17 11.5 28.5T460-240q17 0 28.5-11.5T500-280q0-17-11.5-28.5T460-320H80v-80h380q50 0 85 35t35 85q0 50-35 85t-85 35ZM80-560v-80h540q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43h-80q0-59 40.5-99.5T620-840q59 0 99.5 40.5T760-700q0 59-40.5 99.5T620-560H80Zm660 320v-80q26 0 43-17t17-43q0-26-17-43t-43-17H80v-80h660q59 0 99.5 40.5T880-380q0 59-40.5 99.5T740-240Z"/>
+          </svg>
+        </div>
+        <div class="detail-info">
+          <span class="detail-value">{{ config?.windConditions }} km/h</span>
+          <span class="detail-label">Wind Speed</span>
+        </div>
+        <div class="wind-scale">
+          <span class="scale-marker" *ngFor="let _ of [1,2,3,4,5]"></span>
+        </div>
       </div>
     </div>
   </div>

@@ -5,3 +5,7 @@
   height: 100vh;
   background-color: wheat;
 }
+
+.add-weather-card{
+  margin: 20px;
+}

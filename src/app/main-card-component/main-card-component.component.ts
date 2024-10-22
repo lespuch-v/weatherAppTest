@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgForOf } from '@angular/common';
 
 export interface MainConfigCard {
   cityName: string;
@@ -11,12 +12,19 @@ export interface MainConfigCard {
 @Component({
   selector: 'main-card-component',
   standalone: true,
-  imports: [],
+  imports: [
+    NgForOf
+  ],
   templateUrl: './main-card-component.component.html',
   styleUrl: './main-card-component.component.css'
 })
 export class MainCardComponentComponent {
 
   @Input() config: MainConfigCard | null = null;
+  @Output() delete = new EventEmitter<void>();
+
+  onDelete() {
+    this.delete.emit();
+  }
 
 }

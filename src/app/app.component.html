@@ -1,5 +1,9 @@
 <main class="main-body-container">
-  <main-card-component [config]="cardConfig"></main-card-component>
+  <main-card-component
+    [config]="cardConfig"
+    (delete)="handleDeleteCard($event)">
+  </main-card-component>
+  <add-weather-card class="add-weather-card" (add)="handleAddNewCity()"></add-weather-card>
   <button (click)="getCity()">click me</button>
   <button (click)="getWeather()">get weather</button>
 </main>
